@@ -7,6 +7,7 @@ export default function App() {
 
   const fetch = require('node-fetch');
 
+  
   const url = 'https://api.themoviedb.org/3/authentication';
   const options = {
     method: 'GET',
@@ -22,6 +23,8 @@ export default function App() {
     .catch(err => console.error('error:' + err));
 
 
+
+    
 
 
     const [movies, setMovies] = useState([]);
@@ -43,6 +46,22 @@ export default function App() {
         } catch (error) {
           console.error('Error fetching data:', error);
         }
+      };
+  
+      fetchNowPlayingMovies();
+    }, []); // Empty dependency array to run the effect only once on component mount
+  
+    const [movie, setMovie] = useState([]);
+
+    useEffect(() => {
+      const fetchNowPlayingMovies = async () => {
+        const url = 'https://api.themoviedb.org/3/movie/15/similar?language=en-US&page=1';
+        const options = {method: 'GET', headers: {accept: 'application/json'}};
+        
+        fetch(url, options)
+          .then(res => res.json())
+          .then(json => console.log(json))
+          .catch(err => console.error('error:2' + err));
       };
   
       fetchNowPlayingMovies();
