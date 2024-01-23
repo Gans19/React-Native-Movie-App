@@ -47,7 +47,6 @@ const HomeScreen = () => {
         renderItem={renderCarouselItem}
         sliderWidth={300}
         itemWidth={300}
-        
         layout="default"
         loop
         autoplay
