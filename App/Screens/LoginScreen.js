@@ -4,7 +4,7 @@ import React from 'react'
 const LoginScreen = () => {
   return (
     <View>
-      <Text>LoginScreen</Text>
+      <Text>LoginScreen 1</Text>
     </View>
   )
 }
