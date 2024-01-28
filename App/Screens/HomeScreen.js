@@ -1,57 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 
 const HomeScreen = () => {
-  const [movies, setMovies] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchNowPlayingMovies = async () => {
-      try {
-        const apiKey = "cf7ec00faea2ebcc0d30a3f90a865377";
-        const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`;
-
-        const response = await fetch(url);
-        if (response.ok) {
-          const data = await response.json();
-          setMovies(data.results);
-        } else {
-          console.error(`Error: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchNowPlayingMovies();
+    fetchData();
   }, []);
 
-  const renderCarouselItem = ({ item }) => (
-    <View style={styles.carouselItem} className=' bg-primary'>
-      <Image
-        style={styles.carouselImage}
-        source={{
-          uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
-        }}
-      />
-      <Text style={styles.carouselText}>{item.title}</Text>
-    </View>
-  );
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://192.168.168.252:8000/users");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setUsers(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   return (
-    <View style={styles.container} className=' bg-primary'>
-      <Text style={styles.header}>Now Playing Movies</Text>
-      <Carousel
-      layoutCardOffset={`18`}
-        data={movies}
-        renderItem={renderCarouselItem}
-        sliderWidth={300}
-        itemWidth={300}
-        layout="default"
-        loop
-        autoplay
-        autoplayInterval={2000}
-      />
+    <View style={styles.container}>
+      <Text style={styles.header}>User List</Text>
+      <ScrollView>
+        {users.map((user, index) => (
+          <View key={index} style={styles.userContainer}>
+            <Text style={styles.userName}>{user.UserName}</Text>
+            <Text style={styles.userEmail}>{user.Pword}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -59,34 +40,29 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 350,
+    padding: 20,
+    backgroundColor: "#fff",
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
   },
-  carouselItem: {
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 5,
-    elevation: 5,
-  },
-  carouselImage: {
-    width: 300,
-    height: 150,
-    resizeMode: "cover",
-  },
-  carouselText: {
-    fontSize: 16,
+  userContainer: {
+    marginBottom: 20,
     padding: 10,
-    textAlign: "center",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+    width: 350,
+  },
+  userName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  userEmail: {
+    fontSize: 16,
+    color: "#666",
   },
 });
 

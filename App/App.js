@@ -19,7 +19,7 @@ export default function App() {
 
   fetch(url, options)
     .then((res) => res.json())
-    .then((json) => console.log(json))
+    // .then((json) => console.log(json))
     .catch((err) => console.error("error:" + err));
 
   const apiKey = "cf7ec00faea2ebcc0d30a3f90a865377";
@@ -35,7 +35,7 @@ export default function App() {
         if (response.ok) {
           const data = await response.json();
           setMovies(data.results);
-          console.log(data.results);
+          // console.log(data.results);
         } else {
           console.error(`Error: ${response.status}`);
         }
@@ -59,7 +59,7 @@ export default function App() {
 
       fetch(url, options)
         .then((res) => res.json())
-        .then((json) => console.log("frt", json))
+        // .then((json) => console.log("frt", json))
         .catch((err) => console.error("error:2" + err));
     };
 
