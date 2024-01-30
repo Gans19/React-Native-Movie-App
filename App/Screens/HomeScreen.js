@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
+import SigninScreen from "./SigninScreen";
+import { NavigationContainer } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const [users, setUsers] = useState([]);
@@ -23,17 +25,11 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>User List</Text>
-      <ScrollView>
-        {users.map((user, index) => (
-          <View key={index} style={styles.userContainer}>
-            <Text style={styles.userName}>{user.UserName}</Text>
-            <Text style={styles.userEmail}>{user.Pword}</Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
+//  <NavigationContainer>
+
+   <SigninScreen />
+//  </NavigationContainer>
+  
   );
 };
 
